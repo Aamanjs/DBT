@@ -1,4 +1,94 @@
+-- General Stored Procedure Problems (No Database Table)
+--     1. Write a stored procedure that accepts two numbers as IN parameters and displays their sum.
+--    2. Write a stored procedure that accepts one number as IN parameter and displays whether it is even or odd.
+--    3. Write a stored procedure that accepts a string as IN parameter and displays the string in uppercase.
+--    4. Write a stored procedure that accepts a number N and prints the factorial of N.
+--    5. Write a stored procedure that accepts a number as IN parameter and prints the multiplication table of that number (up to 10).
 
+
+-- sol 1
+delimiter //
+create procedure sumdetails(in a int, in b int)
+begin
+declare c int default 0;
+set c = a + b;
+select concat("The sum of ", a, " and ", b, " is: ", c) as Result;
+end //
+
+call sumdetails(4,9);
+-- ---------------------------------------------------------------------
+
+
+-- sol 2
+delimiter //
+create procedure evenOdd(in a int)
+begin
+declare b varchar(30) default "";
+if(a%2 = 0) then
+set b = " is Even Number";
+else 
+set b = " is Odd Number";
+end if;
+select concat(a, b) as Result;
+end //
+
+call evenOdd(8);
+-- --------------------------------------------------------------------
+
+-- sol 3
+delimiter //
+create procedure upper(in a varchar(30))
+begin
+declare c varchar(30) default "";
+set c = upper(a);
+select concat("upper case of ",a, " is: ", c) as Result;
+end//
+
+call upper("small");
+-- --------------------------------------------------------------------
+drop procedure factorial;
+-- sol 4
+delimiter //
+create procedure factorial(in a int)
+begin
+declare f int default 1;
+declare i int default 1;
+
+while i <= a 
+do 
+set f = f*i;
+set i = i+1;
+end while;
+
+select concat("Fatcorial of ", a, " is: ", f) as Result;
+
+end//
+
+call factorial(4);
+
+--    5. Write a stored procedure that accepts a number as IN parameter and prints the multiplication table of that number (up to 10).
+
+-- sol 5
+delimiter //
+create procedure multitable(in a int)
+begin 
+declare i int default 1;
+declare c int ;
+
+while i<=10
+do 
+set c = a*i;
+select concat(a,' X ',i,' = ' ,c) as multiplication;
+set i = i+1;
+
+end while;
+
+
+end//
+
+CALL print_table(5);
+
+-- -----------------------------------------------------------------------------------------------
 -- Create the database
 CREATE DATABASE companydb;
 USE companydb;
