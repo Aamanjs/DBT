@@ -219,3 +219,43 @@ end //
 call q6();
 --  ---------------------------------------------------------------------------------
 
+-- Q7.Create a stored procedure that loops through orders and prints each order ID using a cursor with a NOT FOUND handler.
+
+drop procedure q7;
+
+delimiter //
+CREATE PROCEDURE q7()
+BEGIN
+DECLARE done int DEFAULT 0; 
+DECLARE p_order_id int DEFAULT 0; 
+
+
+DECLARE c7 CURSOR FOR SELECT order_id from orders;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+CREATE TEMPORARY TABLE IF NOT EXISTS temp_order(
+	ordr_id int
+);
+
+OPEN c7;
+
+read_loop: LOOP
+	FETCH c7 INTO p_order_id;
+    
+    IF done = 1 then
+		LEAVE read_loop;
+	END IF;
+    
+    INSERT into temp_order(ordr_id) VALUES (p_order_id);
+    
+END LOOP;
+
+CLOSE c7;
+
+SELECT * FROM temp_order;
+
+end //
+
+call q7();
+-- --------------------------------------------------------------------------------------
+
