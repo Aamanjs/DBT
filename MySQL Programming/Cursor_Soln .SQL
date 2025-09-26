@@ -170,3 +170,52 @@ end //
 
 call q5();
 -- --------------------------------------------------------------------
+
+-- Q6. Fetch student names and grades using a cursor and print only those with grades below 60.
+
+select * from students;
+
+drop procedure q6;
+
+delimiter //
+CREATE PROCEDURE q6()
+BEGIN
+declare s_name varchar(30);
+declare s_grade int;
+declare done int default 0;
+
+declare c6 cursor for select student_name,grade from students;
+declare continue handler for not found set done =1;
+
+create temporary table if not exists temp_students (
+	student_name VARCHAR(30),
+    grade int 
+    );
+    
+TRUNCATE TABLE temp_students;
+
+open c6;
+
+read_loop:loop
+
+fetch c6 into s_name,s_grade;
+
+if done =1 then
+leave read_loop; 
+end if;
+
+if(s_grade < 60) then
+	INSERT INTO temp_students(student_name,grade) VALUES (s_name,s_grade);
+end if;
+
+end loop;
+
+close c6;
+
+SELECT * FROM temp_students;
+
+end //
+
+call q6();
+--  ---------------------------------------------------------------------------------
+
