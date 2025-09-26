@@ -259,3 +259,47 @@ end //
 call q7();
 -- --------------------------------------------------------------------------------------
 
+-- Q9. Use a cursor in a stored procedure to increase the price of all products by 5%.
+
+drop procedure q9;
+
+delimiter //
+CREATE PROCEDURE q9()
+BEGIN
+DECLARE done int default 0;
+DECLARE p_id int;
+DECLARE p_price int;
+DECLARE f_price int;
+
+DECLARE c9 CURSOR FOR select product_id, price from products;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+CREATE TEMPORARY TABLE IF NOT EXISTS temp_product(
+	upd_id int,
+    upd_price int
+);
+
+OPEN c9;
+
+read_loop: LOOP
+	fetch c9 into p_id, p_price;
+    if done = 1 then
+		leave read_loop;
+    end if;
+    
+    
+    SET f_price = p_price * 1.05;
+    
+    INSERT INTO temp_product(upd_id, upd_price) VALUES (p_id, f_price);
+    
+END LOOP;
+
+CLOSE c9;
+
+SELECT upd_id as product_id, upd_price as price from temp_product;
+
+end //
+
+call q9();
+-- ---------------------------------------------------------------------------
+
