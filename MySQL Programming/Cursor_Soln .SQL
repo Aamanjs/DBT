@@ -303,3 +303,42 @@ end //
 call q9();
 -- ---------------------------------------------------------------------------
 
+-- 10. Write a procedure that fetches all book titles from a books table and displays them using a cursor.
+
+drop procedure q10;
+
+delimiter //
+CREATE PROCEDURE q10()
+BEGIN
+DECLARE done int default 0;
+DECLARE p_title varchar(30);
+DECLARE f_title varchar(30);
+
+
+DECLARE c10 cursor for select book_title from books;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+CREATE TEMPORARY TABLE IF NOT EXISTS temp_books(
+	book_title varchar(30)
+    );
+    
+OPEN c10;
+
+read_loop: LOOP 
+	fetch c10 into p_title;
+    if done = 1 then
+		leave read_loop;
+	end if;
+    
+    set f_title = p_title;
+    INSERT INTO temp_books(book_title) VALUES (f_title);
+
+END LOOP;
+
+SELECT * from temp_books;
+
+end //
+
+
+call q10();
+
