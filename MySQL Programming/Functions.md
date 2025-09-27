@@ -8,17 +8,15 @@
 
 ### 4. Create a procedure that accepts a department ID and returns the average salary of employees in that department using AVG().
 
-### 5. Write a procedure that accepts two dates and returns the number of days between them using DATEDIFF().
+### 5. Write a stored function to return the annual salary of an employee when the employee ID is given.
 
-### 6. Write a procedure that accepts a product ID and increases its price by 10% if price > 5000, else 5%, using CASE.
+### 6. Write a stored function to find the experience of an employee (in years) from the hire date, when the employee ID is given.
 
-### 7.  Create a procedure that accepts a year and checks whether it is a leap year using MOD() and IF().
+### 7.  Write a stored function to return the department name when the employee ID is given.
 
-### 8. Write a procedure that returns the nth highest salary from the employees table using ORDER BY and LIMIT.
+### 8. Write a stored function to return the number of employees in a particular department, when the department ID is given.
 
-### 9. Create a procedure that accepts an employee’s joining date and returns their years of experience using TIMESTAMPDIFF().
-
-### 10. Write a procedure that accepts a customer’s phone number and returns a masked version (e.g., 98765****1) using CONCAT() and RIGHT().
+### 9. Write a stored function to return the bonus amount for an employee based on their salary (e.g., 10% of salary if salary < 50,000, otherwise 5%).
 
 
 ```SQL
